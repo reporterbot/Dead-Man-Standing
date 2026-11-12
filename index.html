@@ -237,6 +237,79 @@
   #menuPlay:hover { filter: brightness(1.06); transform: translateY(-2px); }
   #menuPlay:active { transform: translateY(4px); border-bottom-width: 3px; }
   .menu-buttons { display: flex; align-items: stretch; gap: 12px; }
+  .menu-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+  #menuSignup {
+    font-size: 30px; letter-spacing: 2px; color: #fff; padding: 10px;
+    background: #3ccf62; border: none; border-bottom: 7px solid #23913f; border-radius: 18px; cursor: pointer;
+    box-shadow: 0 12px 30px rgba(0,0,0,.3); transition: transform .1s, filter .1s;
+  }
+  #menuSignup:hover { filter: brightness(1.06); transform: translateY(-2px); }
+  #menuSignup:active { transform: translateY(4px); border-bottom-width: 3px; }
+
+  /* ---------- Sign-up frame ---------- */
+  #signup {
+    position: fixed; inset: 0; z-index: 46; padding: 16px;
+    background: rgba(5, 8, 18, .6); display: flex; align-items: center; justify-content: center;
+  }
+  .su-card {
+    position: relative; width: min(380px, 100%); height: min(560px, calc(100vh - 32px));
+    padding: 22px 24px 18px; display: flex; flex-direction: column;
+  }
+  .su-close { left: 12px; right: auto; }
+  .su-title { align-self: flex-end; font-size: 36px; color: #fff; letter-spacing: 2px; transition: opacity .25s; }
+  .su-title.fading { opacity: 0; }
+  .su-stage { flex: 1; display: flex; flex-direction: column; transition: opacity .25s; }
+  .su-stage.fading { opacity: 0; }
+  .su-stage.gone { display: none; }
+  #suForm { padding-top: 36px; gap: 10px; }
+  .su-label { font-weight: 800; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  #suName {
+    font: 800 20px 'Nunito', system-ui, sans-serif; color: var(--text);
+    background: rgba(255,255,255,.08); border: 2px solid var(--key-border); border-radius: 12px;
+    padding: 12px 14px; outline: none;
+  }
+  #suName:focus { border-color: var(--accent); }
+  .su-error { min-height: 18px; color: var(--bad); font-weight: 800; font-size: 13px; }
+  #suRegister, #suContinue {
+    font-size: 26px; letter-spacing: 1px; padding: 12px; border: none; border-radius: 14px; cursor: pointer;
+  }
+  #suRegister { color: #2a2100; background: var(--accent); border-bottom: 6px solid #b8930a; }
+  #suRegister:disabled { filter: grayscale(.6) brightness(.8); cursor: default; }
+  #suContinue { color: #fff; background: #2f7df6; border-bottom: 6px solid #1c4fb3; }
+  #suRegister:hover, #suContinue:hover { filter: brightness(1.07); }
+  #suRegister:active, #suContinue:active { transform: translateY(3px); border-bottom-width: 3px; }
+  .su-foot { margin-top: auto; text-align: center; font-size: 12px; color: rgba(255,255,255,.45); }
+  #suWait { align-items: center; justify-content: center; gap: 18px; }
+  .spinner {
+    width: 58px; height: 58px; border-radius: 50%;
+    border: 6px solid rgba(255,255,255,.18); border-top-color: #fff;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .su-wait-text { color: #fff; font-weight: 800; font-size: 17px; }
+  #suDone { align-items: stretch; gap: 22px; }
+  .su-success { text-align: center; font-size: 46px; color: var(--accent); letter-spacing: 2px; text-shadow: 0 3px 0 #7a5a00; margin-top: 4px; }
+  .su-user {
+    display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+    background: rgba(255,255,255,.07); border: 1px solid var(--panel-border); border-radius: 14px;
+  }
+  .su-user img { width: 48px; height: 48px; border-radius: 50%; background: #9fd0ff; border: 2px solid rgba(255,255,255,.6); object-fit: cover; }
+  .su-user span { color: #fff; font-weight: 800; font-size: 19px; overflow: hidden; text-overflow: ellipsis; }
+  #suContinue { margin-top: auto; }
+
+  /* online button: grey until signed in, then blue; note when not signed in */
+  .mode.online { position: relative; overflow: hidden; }
+  .mode.online.ready { background: linear-gradient(160deg, #2f7df6, #1c4fb3); border-color: #6aa4ff; }
+  .mode.online.ready small { color: rgba(255,255,255,.85); }
+  .online-note {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 82%; padding: 10px 12px; border-radius: 12px; text-align: center;
+    background: rgba(8, 10, 18, .92); border: 1px solid rgba(255,255,255,.18);
+    font: 800 14px 'Nunito', system-ui, sans-serif; color: #fff; letter-spacing: 0;
+    opacity: 0; pointer-events: none;
+  }
+  .online-note.show { animation: note 3s ease forwards; }
+  @keyframes note { 0% { opacity: 0; } 8% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; } }
   #menuCustomize {
     font-size: 28px; letter-spacing: 1px; color: #fff;
     background: #2f7df6; border: none; border-bottom: 7px solid #1c4fb3;
@@ -278,6 +351,16 @@
   }
   .hair:hover { background: rgba(255,255,255,.13); }
   .hair.sel { border-color: #6aa4ff; background: linear-gradient(160deg, #2f7df6, #1c4fb3); }
+  .csel {
+    appearance: none; -webkit-appearance: none; width: 100%; cursor: pointer;
+    font: 800 15px 'Nunito', system-ui, sans-serif; color: var(--text);
+    background: rgba(255,255,255,.08) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23ffd23f' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 12px center / 12px 8px;
+    border: 2px solid var(--panel-border); border-radius: 12px; padding: 10px 36px 10px 12px; outline: none;
+  }
+  .csel:hover { background-color: rgba(255,255,255,.13); }
+  .csel:focus { border-color: #6aa4ff; }
+  .csel option { background: #1a1f2e; color: #fff; }
+  .acc-title { margin: 6px 0 -4px; font-size: 22px; color: var(--accent); letter-spacing: 1px; }
   #custDone {
     margin-top: auto; padding: 12px; border-radius: 14px; cursor: pointer;
     font-size: 26px; letter-spacing: 1px; color: #2a2100;
@@ -285,6 +368,89 @@
   }
   #custDone:hover { filter: brightness(1.06); }
   #custDone:active { transform: translateY(3px); border-bottom-width: 3px; }
+
+  /* ---------- MATCH dashboard (online) ---------- */
+  #match {
+    position: fixed; inset: 0; z-index: 44; padding: 16px;
+    background: rgba(5, 8, 18, .62); display: flex; align-items: center; justify-content: center;
+  }
+  .match-card {
+    position: relative; width: min(760px, 100%); max-height: calc(100vh - 32px); overflow-y: auto;
+    padding: 22px 26px 22px;
+  }
+  .match-close { left: 14px; right: auto; top: 14px; }
+  .match-me { position: absolute; top: 14px; right: 16px; display: flex; align-items: center; gap: 10px; max-width: 40%; }
+  .match-me span { color: #fff; font-weight: 800; font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .match-me img { width: 44px; height: 44px; border-radius: 50%; border: 2px solid rgba(255,255,255,.6); background: #9fd0ff; object-fit: cover; flex: none; }
+  .match-title { margin: 6px 0 18px; text-align: center; font-size: 58px; color: var(--accent); letter-spacing: 3px; text-shadow: 0 4px 0 #7a5a00; }
+  .m-stage { display: flex; flex-direction: column; gap: 16px; transition: opacity .3s; }
+  .m-stage.fading { opacity: 0; }
+  .m-stage.gone { display: none; }
+  .m-row { display: flex; flex-direction: column; gap: 8px; }
+  .m-row .clabel b { color: var(--accent); font-size: 15px; }
+  #maxPlayers { width: 100%; accent-color: #ffd23f; height: 22px; cursor: pointer; }
+  .code-row { display: flex; align-items: center; gap: 12px; }
+  .code-label {
+    flex: 1; text-align: center; font-size: 40px; letter-spacing: 12px; color: #2a2100;
+    background: var(--accent); border-bottom: 6px solid #b8930a; border-radius: 14px; padding: 6px 10px 2px;
+  }
+  .regen {
+    display: flex; align-items: center; gap: 8px; height: 58px; padding: 0 16px; border-radius: 14px; cursor: pointer;
+    background: rgba(255,255,255,.1); border: 2px solid var(--key-border); color: var(--text);
+    font: 800 14px 'Nunito', system-ui, sans-serif;
+  }
+  .regen svg { width: 22px; height: 22px; }
+  .regen:hover { background: rgba(255,255,255,.18); }
+  .regen:disabled { cursor: default; opacity: .8; }
+  .regen .spinner { width: 22px; height: 22px; border-width: 3px; }
+  .m-maps { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
+  .m-map {
+    flex: 0 0 180px; border-radius: 12px; overflow: hidden; cursor: pointer; padding: 0; text-align: left;
+    background: rgba(255,255,255,.06); border: 3px solid transparent; color: var(--text);
+  }
+  .m-map img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; background: #1a1f2e; }
+  .m-map span { display: block; padding: 6px 10px 8px; font: 400 18px 'Lilita One', 'Nunito', system-ui, sans-serif; }
+  .m-map.sel { border-color: var(--accent); }
+  .big-yellow {
+    font-size: 30px; letter-spacing: 2px; padding: 12px; border: none; border-radius: 16px; cursor: pointer;
+    color: #2a2100; background: var(--accent); border-bottom: 7px solid #b8930a;
+  }
+  .big-yellow:hover { filter: brightness(1.06); }
+  .big-yellow:active { transform: translateY(4px); border-bottom-width: 3px; }
+  .big-yellow:disabled { filter: grayscale(.6) brightness(.8); cursor: default; }
+  .m-join { display: flex; gap: 10px; }
+  #joinCode {
+    flex: 1; min-width: 0; font: 800 18px 'Nunito', system-ui, sans-serif; color: var(--text); text-transform: uppercase;
+    background: rgba(255,255,255,.08); border: 2px solid var(--key-border); border-radius: 12px; padding: 10px 14px; outline: none;
+  }
+  #joinCode::placeholder { text-transform: none; color: rgba(255,255,255,.45); }
+  #joinCode:focus { border-color: #6aa4ff; }
+  #joinLobby {
+    font-size: 20px; letter-spacing: 1px; padding: 0 22px; border: none; border-radius: 12px; cursor: pointer;
+    color: #fff; background: #2f7df6; border-bottom: 5px solid #1c4fb3;
+  }
+  .m-error { min-height: 18px; color: var(--bad); font-weight: 800; font-size: 13px; text-align: center; }
+  .lobby-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .lobby-head b { color: var(--accent); font-size: 16px; letter-spacing: 2px; }
+  .player-list { display: flex; flex-direction: column; gap: 8px; max-height: 300px; overflow-y: auto; }
+  .pl-row {
+    display: flex; align-items: center; gap: 12px; padding: 8px 12px;
+    background: rgba(255,255,255,.07); border: 1px solid var(--panel-border); border-radius: 14px;
+    animation: plin .3s ease-out;
+  }
+  @keyframes plin { from { opacity: 0; transform: translateY(6px); } }
+  .pl-row img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid rgba(255,255,255,.55); background: #9fd0ff; object-fit: cover; }
+  .pl-row .pl-name { color: #fff; font-weight: 800; font-size: 17px; }
+  .pl-row .pl-crown { width: 26px; height: 26px; flex: none; }
+  .pl-row .pl-tag { margin-left: auto; font-size: 12px; font-weight: 800; color: var(--muted); }
+  .guest-map { text-align: center; }
+  .guest-map b { color: #fff; }
+  .wait-host { text-align: center; color: var(--muted); font-weight: 800; font-size: 14px; }
+  .link-btn {
+    align-self: center; background: none; border: none; cursor: pointer;
+    color: var(--muted); font: 800 13px 'Nunito', system-ui, sans-serif; text-decoration: underline;
+  }
+  .link-btn:hover { color: var(--text); }
 
   /* ---------- In-map leave button + popup ---------- */
   #leaveBtn {
@@ -406,7 +572,7 @@
 
 <div id="controls" class="panel">
   <b>WASD</b> move · <b>Shift</b> sprint · <b>Space</b> jump<br />
-  <b>E</b> climb ledge · <b>Click</b> / <b>F</b> punch<br />
+  <b>E</b> climb ledge · <b>C</b> crouch / slide · <b>Click</b> / <b>F</b> punch<br />
   <b>Drag</b> / <b>← →</b> camera · <b>Scroll</b> zoom
 </div>
 
@@ -462,9 +628,12 @@
       <li>Added Customization</li>
     </ul>
   </div>
-  <div class="menu-buttons">
-    <button id="menuCustomize" class="display">Customize</button>
-    <button id="menuPlay">PLAY</button>
+  <div class="menu-actions">
+    <button id="menuSignup" class="display">SIGN-UP</button>
+    <div class="menu-buttons">
+      <button id="menuCustomize" class="display">Customize</button>
+      <button id="menuPlay">PLAY</button>
+    </div>
   </div>
 </div>
 
@@ -474,7 +643,13 @@
   <div class="csec"><div class="clabel">Shirt</div><div class="swatches" data-key="shirt"></div></div>
   <div class="csec"><div class="clabel">Pants</div><div class="swatches" data-key="pants"></div></div>
   <div class="csec"><div class="clabel">Shoes</div><div class="swatches" data-key="shoes"></div></div>
-  <div class="csec"><div class="clabel">Hair</div><div class="hairs" id="hairList"></div></div>
+  <div class="csec"><label class="clabel" for="hairSelect">Hair</label><select class="csel" id="hairSelect"></select></div>
+  <h3 class="acc-title display">ACCESSORIES</h3>
+  <div class="csec"><label class="clabel" for="acc-head">Head</label><select class="csel" id="acc-head" data-slot="head"></select></div>
+  <div class="csec"><label class="clabel" for="acc-face">Face</label><select class="csel" id="acc-face" data-slot="face"></select></div>
+  <div class="csec"><label class="clabel" for="acc-back">Back</label><select class="csel" id="acc-back" data-slot="back"></select></div>
+  <div class="csec"><label class="clabel" for="acc-shirt">Shirt</label><select class="csel" id="acc-shirt" data-slot="shirt"></select></div>
+  <div class="csec"><label class="clabel" for="acc-front">Front</label><select class="csel" id="acc-front" data-slot="front"></select></div>
   <button id="custDone" class="display">Done</button>
 </div>
 
@@ -487,6 +662,7 @@
         <button class="mode online" id="btnOnline">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></svg>
           ONLINE<small>Play with others</small>
+          <span class="online-note" id="onlineNote">You must sign-up to play online!</span>
         </button>
         <button class="mode offline" id="btnOffline">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
@@ -518,6 +694,80 @@
     </g>
   </svg>
 </button>
+
+<div id="signup" class="gone">
+  <div class="su-card panel">
+    <button class="mclose su-close" id="suClose" aria-label="Close">✕</button>
+    <div class="su-title display" id="suTitle">SIGN-UP</div>
+    <div class="su-stage" id="suForm">
+      <label class="su-label" for="suName">Username</label>
+      <input id="suName" type="text" maxlength="16" autocomplete="off" spellcheck="false" placeholder="Pick a username" />
+      <div class="su-error" id="suError" role="alert"></div>
+      <button id="suRegister" class="display">REGISTER</button>
+      <div class="su-foot">No password. No email. Nothing. Just a username.</div>
+    </div>
+    <div class="su-stage gone" id="suWait">
+      <div class="spinner" aria-hidden="true"></div>
+      <div class="su-wait-text">Making your account!</div>
+    </div>
+    <div class="su-stage gone" id="suDone">
+      <div class="su-success display">SUCCESS!</div>
+      <div class="su-user"><img id="suPfp" alt="Your character" /><span id="suUser"></span></div>
+      <button id="suContinue" class="display">CONTINUE</button>
+    </div>
+  </div>
+</div>
+
+<div id="match" class="gone">
+  <div class="match-card panel">
+    <button class="mclose match-close" id="matchClose" aria-label="Close">✕</button>
+    <div class="match-me"><span id="matchName"></span><img id="matchPfp" alt="Your character" /></div>
+    <h1 class="match-title display">MATCH</h1>
+
+    <div class="m-stage" id="matchSetup">
+      <div class="m-row">
+        <label class="clabel" for="maxPlayers">Max players: <b id="maxVal">4</b></label>
+        <input type="range" id="maxPlayers" min="2" max="8" step="1" value="4" />
+      </div>
+      <div class="m-row">
+        <div class="clabel">Lobby code</div>
+        <div class="code-row">
+          <div id="lobbyCode" class="code-label display">-----</div>
+          <button id="regenCode" class="regen" aria-label="Regenerate code">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
+            <span>Regenerate</span>
+          </button>
+        </div>
+      </div>
+      <div class="m-row">
+        <div class="clabel">Map</div>
+        <div class="m-maps" id="matchMaps"></div>
+      </div>
+      <button id="createLobby" class="display big-yellow">CREATE LOBBY</button>
+      <div class="m-join">
+        <input id="joinCode" maxlength="5" autocomplete="off" spellcheck="false" placeholder="Got a code? Join a friend" aria-label="Lobby code to join" />
+        <button id="joinLobby" class="display">JOIN</button>
+      </div>
+      <div class="m-error" id="matchError" role="alert"></div>
+    </div>
+
+    <div class="m-stage gone" id="matchLobby">
+      <div class="lobby-head">
+        <span class="clabel">Players <b id="lobbyCount">1 / 4</b></span>
+        <span class="clabel">Code <b id="lobbyCodeShow" class="display"></b></span>
+      </div>
+      <div id="playerList" class="player-list"></div>
+      <div class="m-row" id="hostMapRow">
+        <label class="clabel" for="lobbyMap">Map</label>
+        <select class="csel" id="lobbyMap"></select>
+      </div>
+      <div class="guest-map clabel" id="guestMap"></div>
+      <button id="startMatch" class="display big-yellow">START</button>
+      <div class="wait-host" id="waitHost">Waiting for the host to start…</div>
+      <button id="leaveLobby" class="link-btn">Leave lobby</button>
+    </div>
+  </div>
+</div>
 
 <div id="leave" class="gone">
   <div class="leave-card panel">
@@ -1164,37 +1414,47 @@ try { Object.assign(look, JSON.parse(localStorage.getItem('pump200.look') || '{}
 if (!HAIR_STYLES.some(([id]) => id === look.hair)) look.hair = 'buzz';
 const saveLook = () => { try { localStorage.setItem('pump200.look', JSON.stringify(look)); } catch (e) { /* ignore */ } };
 
-// the player gets its own materials so recolouring never touches NPCs that share cached ones
-const playerMats = {
-  skin: new THREE.MeshStandardMaterial({ roughness: 0.55 }),
-  shirt: new THREE.MeshStandardMaterial({ roughness: 0.6 }),
-  pants: new THREE.MeshStandardMaterial({ roughness: 0.7 }),
-  belt: new THREE.MeshStandardMaterial({ roughness: 0.7 }),
-  shoes: new THREE.MeshStandardMaterial({ roughness: 0.5 }),
-  hair: new THREE.MeshStandardMaterial({ color: 0x2e1d12, roughness: 0.8 }),
-};
-for (const m of playerRig.meshes) {
-  const n = m.name;
-  if (n === 'Head' || n.endsWith('LowerArm') || n.endsWith('Hand')) m.material = playerMats.skin;
-  else if (n === 'UpperTorso' || n.endsWith('UpperArm')) m.material = playerMats.shirt;
-  else if (n.endsWith('UpperLeg') || n.endsWith('LowerLeg')) m.material = playerMats.pants;
-  else if (n === 'LowerTorso') m.material = playerMats.belt;
-  else if (n.endsWith('Foot')) m.material = playerMats.shoes;
+// An "avatar" = a rig dressed in a look: its own materials (so recolouring never touches NPCs that
+// share cached ones), a hair holder and accessory holders. Your character is one; every other
+// online player gets one too. The builders below dress whichever avatar is current (AV).
+function makeAvatar(rig) {
+  const mats = {
+    skin: new THREE.MeshStandardMaterial({ roughness: 0.55 }),
+    shirt: new THREE.MeshStandardMaterial({ roughness: 0.6 }),
+    pants: new THREE.MeshStandardMaterial({ roughness: 0.7 }),
+    belt: new THREE.MeshStandardMaterial({ roughness: 0.7 }),
+    shoes: new THREE.MeshStandardMaterial({ roughness: 0.5 }),
+    hair: new THREE.MeshStandardMaterial({ color: 0x2e1d12, roughness: 0.8 }),
+  };
+  for (const m of rig.meshes) {
+    const n = m.name;
+    if (n === 'Head' || n.endsWith('LowerArm') || n.endsWith('Hand')) m.material = mats.skin;
+    else if (n === 'UpperTorso' || n.endsWith('UpperArm')) m.material = mats.shirt;
+    else if (n.endsWith('UpperLeg') || n.endsWith('LowerLeg')) m.material = mats.pants;
+    else if (n === 'LowerTorso') m.material = mats.belt;
+    else if (n.endsWith('Foot')) m.material = mats.shoes;
+  }
+  const hairRoot = new THREE.Group();
+  rig.J.neck.add(hairRoot);
+  const accRoots = { head: new THREE.Group(), face: new THREE.Group(), back: new THREE.Group(), shirt: new THREE.Group(), front: new THREE.Group() };
+  rig.J.neck.add(accRoots.head, accRoots.face);
+  rig.J.waist.add(accRoots.back, accRoots.shirt);
+  rig.J.hips.add(accRoots.front);
+  return { rig, mats, hairRoot, hairLocks: [], accRoots, look: null };
 }
-
-const hairRoot = new THREE.Group();
-playerRig.J.neck.add(hairRoot);
-let hairLocks = [];   // dreadlock pivots that swing
+const playerAv = makeAvatar(playerRig);
+const playerMats = playerAv.mats;
+let AV = playerAv;          // the avatar the hair/accessory builders are currently dressing
 function hairBox(geo, x, y, z, rx = 0, ry = 0, rz = 0) {
-  const m = new THREE.Mesh(geo, playerMats.hair);
+  const m = new THREE.Mesh(geo, AV.mats.hair);
   m.position.set(x, y, z); m.rotation.set(rx, ry, rz);
   m.castShadow = true; m.receiveShadow = true;
   return m;
 }
 // Head spans x,z ∈ ±H/2 and y ∈ [0, H] in the neck group; the face is on +z, eyes at about y = 0.7.
 function buildHair(style) {
+  const hairRoot = AV.hairRoot, hairLocks = (AV.hairLocks = []), playerRig = AV.rig;
   for (const c of [...hairRoot.children]) { hairRoot.remove(c); c.traverse((o) => { if (o.isMesh && o.userData.ownGeo) o.geometry.dispose(); }); }
-  hairLocks = [];
   const H = playerRig.D.head, h2 = H / 2;
   if (style === 'buzz') {
     hairRoot.add(hairBox(rgeo(H + 0.08, 0.26, H + 0.08, 0.1), 0, H - 0.04, -0.02));
@@ -1251,6 +1511,7 @@ function buildHair(style) {
 }
 // dreads trail back a little when moving and sway gently
 function updateHair(dt, t) {
+  const hairLocks = playerAv.hairLocks;
   if (!hairLocks.length) return;
   const sp = clamp(state.speed / RUN, 0, 1);
   for (const p of hairLocks) {
@@ -1261,15 +1522,314 @@ function updateHair(dt, t) {
     p.rotation.z = damp(p.rotation.z, u.rz + Math.cos(t * 1.7 + u.i) * 0.03, 8, dt);
   }
 }
-function applyLook() {
-  playerMats.skin.color.set(look.skin);
-  playerMats.shirt.color.set(look.shirt);
-  playerMats.pants.color.set(look.pants);
-  playerMats.belt.color.set(look.pants).multiplyScalar(0.62);
-  playerMats.shoes.color.set(look.shoes);
-  buildHair(look.hair);
+// When the game is served by server.py the API is same-origin; opened from disk it talks to localhost:8000.
+const API = location.protocol.startsWith('http') ? '' : 'http://localhost:8000';
+
+/* ---------- Accessories (Head, Face, Back, Shirt, Front) ---------- */
+const ACC_SLOTS = ['head', 'face', 'back', 'shirt', 'front'];
+const ACCESSORIES = {
+  head: [['none', 'None'], ['cap', 'Backwards Cap'], ['helmet', 'Biker Helmet'], ['crown', 'Golden Crown']],
+  face: [['none', 'None'], ['skimask', 'Ski Mask'], ['glasses', 'Glasses'], ['bandana', 'Bandana']],
+  back: [['none', 'None'], ['backpack', 'Backpack'], ['sword', 'Sword'], ['shotgun', 'Pump Shotgun']],
+  shirt: [['none', 'None'], ['pump', 'Pump Shirt']],          // + every image in the shirts/ folder
+  front: [['none', 'None'], ['glock', 'Glock']],
+};
+look.acc = { head: 'none', face: 'none', back: 'none', shirt: 'none', front: 'none', ...(look.acc || {}) };
+for (const s of ACC_SLOTS) {
+  const v = look.acc[s];
+  if (typeof v !== 'string' || (!v.startsWith('file:') && !ACCESSORIES[s].some(([id]) => id === v))) look.acc[s] = 'none';
 }
+
+// "coolshirt.jpg" → "Cool Shirt": split on _ - spaces and camelCase, then pull known words out of
+// run-together lowercase names; anything it can't split cleanly is just capitalised.
+const SHIRT_WORDS = ('cool shirt tee tshirt top black white red blue green yellow orange purple pink gray grey brown gold golden silver ' +
+  'dark light neon pastel retro vintage classic basic plain simple striped stripe stripes stripy camo pump gun shotgun logo ' +
+  'skull fire flame flames star stars sun moon night day city street urban style swag drip hype beast mode epic legend ' +
+  'pro gamer noob ninja pirate rocket space galaxy planet cat dog bear wolf tiger lion shark dragon snake eagle bird fish ' +
+  'smile happy sad angry love heart peace chill vibe vibes summer winter spring autumn fall rainbow pixel block blocky cute ' +
+  'funny crazy wild king queen prince boss team club gang crew squad sport sports soccer football basketball baseball ' +
+  'racing race car cars bike skate skater surf surfer beach palm tree trees flower flowers rose roses wave waves ocean sea ' +
+  'mountain forest storm thunder lightning bolt ice frost snow rain cloud clouds sky air earth water metal rock music band ' +
+  'guitar game games player one two three four five big small little super mega ultra hero villain zombie ghost alien robot ' +
+  'monster demon angel devil money cash dollar diamond diamonds crown jewel lucky luck number official original new old ' +
+  'best good bad evil nice my the and of a in on to for with no yes hot cold fresh clean dirty smooth hard soft fast slow ' +
+  'pump200 shop store brand wear tank hoodie jersey uniform polo flannel graphic print art design pattern check checkered ' +
+  'plaid dots dotted spotted tie dye tiedye splash paint graffiti tag tags boom bang pow wow yolo lol omg').split(' ');
+const SHIRT_DICT = new Set(SHIRT_WORDS);
+function splitWords(token) {
+  const s = token.toLowerCase(), n = s.length;
+  if (SHIRT_DICT.has(s) || n < 4) return [s];
+  // fewest known words that exactly cover the string
+  const best = new Array(n + 1).fill(null); best[0] = [];
+  for (let i = 1; i <= n; i++) {
+    for (let j = Math.max(0, i - 12); j < i; j++) {
+      if (!best[j]) continue;
+      const w = s.slice(j, i);
+      if (!SHIRT_DICT.has(w) && !/^\d+$/.test(w)) continue;
+      const cand = [...best[j], w];
+      if (!best[i] || cand.length < best[i].length) best[i] = cand;
+    }
+  }
+  return best[n] || [s];
+}
+function shirtDisplayName(file) {
+  const base = file.replace(/\.[^.]+$/, '').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[_\-.\s]+/g, ' ').trim();
+  const words = base.split(' ').filter(Boolean).flatMap((t) => (/[A-Z]/.test(t.slice(1)) ? [t] : splitWords(t)));
+  return words.map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') || file;
+}
+
+const accMat = {
+  black: smat(0x16161a, 0.75), knit: smat(0x1a1a1e, 1), glossBlack: smat(0x101114, 0.18, 0.35),
+  // (no environment map in the scene, so keep metalness modest or metals render near-black)
+  visor: smat(0x2a4d78, 0.15, 0.4), red: smat(0xc0262d, 0.7), gold: smat(0xffc93c, 0.3, 0.45),
+  gem: smat(0xd81b3a, 0.15, 0.3), steel: smat(0xe8edf2, 0.28, 0.25), gunMetal: smat(0x34373c, 0.4, 0.35),
+  wood: smat(0x6b4226, 0.7), grip: smat(0x3a2414, 0.8), pistol: smat(0x161718, 0.45, 0.4),
+};
+function accPart(group, geo, mat, x, y, z, rx = 0, ry = 0, rz = 0) {
+  const m = new THREE.Mesh(geo, mat);
+  m.position.set(x, y, z); m.rotation.set(rx, ry, rz);
+  m.castShadow = true; m.receiveShadow = true;
+  group.add(m);
+  return m;
+}
+function canvasMat(size, draw, opts = {}) {
+  const tex = canvasTex(size, draw);
+  return new THREE.MeshStandardMaterial({ map: tex, roughness: 0.8, ...opts });
+}
+// shotgun silhouette (same shape as the leave-button icon) drawn into a 2D canvas
+function drawShotgun(g, fill, edge, bold = 0) {
+  g.fillStyle = fill; g.lineJoin = 'round';
+  // `bold` fattens every part with a same-colour stroke so thin bits (barrel, tube) read from afar
+  const shape = (fn) => {
+    g.beginPath(); fn(); g.fill();
+    if (bold) { g.strokeStyle = fill; g.lineWidth = bold; g.stroke(); }
+    g.strokeStyle = edge; g.lineWidth = 0.8; g.stroke();
+  };
+  const rr = (x, y, w, h, r) => shape(() => g.roundRect(x, y, w, h, r));
+  shape(() => { g.moveTo(2, 9.5); g.lineTo(17, 6.5); g.lineTo(17, 14); g.lineTo(5.5, 20.5); g.quadraticCurveTo(3, 21.5, 2, 19.5); g.closePath(); });
+  rr(16, 5, 13, 9, 1.6); rr(27, 6, 35, 3, 1); rr(27, 10, 28, 3, 1); rr(36, 9, 13, 5.6, 1.6);
+  shape(() => { g.moveTo(20, 14); g.quadraticCurveTo(20, 19.5, 25, 19.5); g.lineTo(26, 19.5); g.lineTo(26, 17.5); g.lineTo(24.6, 17.5); g.quadraticCurveTo(22, 17.5, 22, 14); g.closePath(); });
+  g.strokeStyle = edge; g.lineWidth = 0.9;
+  for (const x of [39, 42, 45]) { g.beginPath(); g.moveTo(x, 9.6); g.lineTo(x, 14); g.stroke(); }
+}
+let pumpShirtMat = null;
+const shirtTexCache = new Map();
+const texLoader = new THREE.TextureLoader();
+
+function buildAccessory(slot, id) {
+  const av = AV, look = av.look, playerRig = av.rig;
+  const g = av.accRoots[slot];
+  for (const c of [...g.children]) {
+    g.remove(c);
+    c.traverse((o) => { if (o.isMesh && o.userData.ownGeo) o.geometry.dispose(); });
+  }
+  if (id === 'none') return;
+  const D = playerRig.D, H = D.head, h2 = H / 2, tH = D.torsoH, tD = D.torsoD;
+  const own = (geo) => { geo.userData = { own: true }; return geo; };
+  const mk = (geo, mat, x, y, z, rx, ry, rz) => { const m = accPart(g, geo, mat, x, y, z, rx, ry, rz); if (geo.userData.own) m.userData.ownGeo = true; return m; };
+  // where the top of the hair is, so a crown sits on it (just the head if a mask hides the hair)
+  const hairTop = look.acc.face === 'skimask' ? H + 0.04
+    : ({ buzz: H + 0.09, dreads: H + 0.15, mohawk: H + 0.12, curly: H + 0.32 }[look.hair] ?? H);
+
+  if (slot === 'head') {
+    if (id === 'cap') {
+      mk(rgeo(H + 0.12, 0.44, H + 0.12, 0.13), accMat.black, 0, H - 0.02, 0);
+      mk(rgeo(H * 0.82, 0.08, 0.62, 0.03), accMat.black, 0, H - 0.18, -(h2 + 0.3));      // visor at the back
+      mk(rgeo(0.16, 0.07, 0.16, 0.03), accMat.black, 0, H + 0.21, 0);                    // top button
+    } else if (id === 'helmet') {
+      mk(rgeo(H + 0.38, H + 0.32, H + 0.38, 0.32), accMat.glossBlack, 0, h2 + 0.09, -0.02);
+      mk(rgeo(H * 0.86, H * 0.42, 0.07, 0.03), accMat.visor, 0, H * 0.6, h2 + 0.19);    // tinted visor
+      mk(rgeo(H * 0.9, 0.3, 0.22, 0.08), accMat.glossBlack, 0, 0.2, h2 + 0.13);         // chin bar
+      mk(rgeo(0.24, 0.05, H + 0.3, 0.02), accMat.red, 0, H + 0.25, -0.02);              // racing stripe
+    } else if (id === 'crown') {
+      const y = hairTop - 0.06, band = 0.3, w = H + 0.16;
+      for (const s of [1, -1]) {
+        mk(rgeo(w, band, 0.08, 0.03), accMat.gold, 0, y + band / 2, s * (w / 2 - 0.04));
+        mk(rgeo(0.08, band, w, 0.03), accMat.gold, s * (w / 2 - 0.04), y + band / 2, 0);
+      }
+      const spike = own(new THREE.ConeGeometry(0.12, 0.42, 4));
+      for (const [x, z] of [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]]) {
+        mk(spike, accMat.gold, x * (w / 2 - 0.04), y + band + 0.2, z * (w / 2 - 0.04), 0, Math.PI / 4, 0);
+      }
+      mk(rgeo(0.18, 0.18, 0.06, 0.03), accMat.gem, 0, y + band / 2, w / 2 + 0.01);       // ruby on the front
+      for (const s of [1, -1]) mk(rgeo(0.12, 0.12, 0.06, 0.02), accMat.gem, s * 0.36, y + band / 2, w / 2 + 0.01);
+    }
+  } else if (slot === 'face') {
+    if (id === 'skimask') {
+      // knitted black box over the head; the front texture has holes cut for the eyes and mouth
+      const front = canvasMat(256, (c) => {
+        c.fillStyle = '#1a1a1e'; c.fillRect(0, 0, 256, 256);
+        c.strokeStyle = 'rgba(255,255,255,0.05)'; c.lineWidth = 2;
+        for (let x = 4; x < 256; x += 8) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, 256); c.stroke(); }
+        c.globalCompositeOperation = 'destination-out';
+        c.beginPath(); c.roundRect(64, 100, 60, 34, 14); c.roundRect(132, 100, 60, 34, 14); c.fill();
+        c.beginPath(); c.ellipse(128, 164, 22, 13, 0, 0, TAU); c.fill();
+      }, { transparent: true, alphaTest: 0.5, roughness: 1 });
+      const geo = own(new THREE.BoxGeometry(H + 0.08, H + 0.06, H + 0.08));
+      mk(geo, [accMat.knit, accMat.knit, accMat.knit, accMat.knit, front, accMat.knit], 0, h2 + 0.02, 0);
+    } else if (id === 'glasses') {
+      for (const s of [1, -1]) {
+        mk(rgeo(0.42, 0.27, 0.06, 0.05), accMat.glossBlack, s * 0.21, 0.69, h2 + 0.07);
+        mk(rgeo(0.05, 0.05, H * 0.56, 0.02), accMat.glossBlack, s * (h2 + 0.03), 0.73, h2 - H * 0.24);   // arms to the ears
+      }
+      mk(rgeo(0.14, 0.05, 0.05, 0.02), accMat.glossBlack, 0, 0.74, h2 + 0.07);                           // bridge
+    } else if (id === 'bandana') {
+      const cloth = canvasMat(128, (c) => {
+        c.fillStyle = '#c0262d'; c.fillRect(0, 0, 128, 128);
+        c.fillStyle = 'rgba(255,255,255,0.85)';
+        for (let y = 8; y < 128; y += 16) for (let x = (y / 16) % 2 ? 16 : 8; x < 128; x += 16) { c.beginPath(); c.arc(x, y, 2.6, 0, TAU); c.fill(); }
+        c.strokeStyle = 'rgba(255,255,255,0.6)'; c.lineWidth = 2;
+        for (let y = 16; y < 128; y += 32) { c.beginPath(); c.arc(64, y, 10, 0, TAU); c.stroke(); }
+      });
+      mk(rgeo(H + 0.08, 0.44, H + 0.08, 0.06), cloth, 0, 0.36, 0);                       // over the nose and mouth
+      mk(own(new THREE.BoxGeometry(0.78, 0.78, 0.05)), cloth, 0, 0.12, h2 + 0.06, 0, 0, Math.PI / 4);   // triangle hanging down
+    }
+  } else if (slot === 'back') {
+    const bz = -(tD / 2);
+    if (id === 'backpack') {
+      mk(rgeo(1.55, 1.7, 0.75, 0.16), accMat.black, 0, tH * 0.5, bz - 0.37);
+      mk(rgeo(1.1, 0.7, 0.28, 0.1), accMat.black, 0, tH * 0.32, bz - 0.86);              // front pocket
+      mk(rgeo(1.12, 0.06, 0.06, 0.02), accMat.gunMetal, 0, tH * 0.5 + 0.4, bz - 0.76);   // zip
+      for (const s of [1, -1]) {
+        mk(rgeo(0.22, 1.3, 0.06, 0.02), accMat.black, s * 0.5, tH * 0.62, tD / 2 + 0.03);  // straps over the chest
+        mk(rgeo(0.22, 0.06, tD + 0.12, 0.02), accMat.black, s * 0.5, tH + 0.02, 0);         // over the shoulders
+      }
+    } else if (id === 'sword') {
+      const s = new THREE.Group();
+      s.position.set(0, tH * 0.5, bz - 0.2); s.rotation.z = 0.65;    // handle up over the right shoulder
+      g.add(s);
+      const add = (geo, mat, x, y, z, rz = 0) => { const m = accPart(s, geo, mat, x, y, z, 0, 0, rz); if (geo.userData.own) m.userData.ownGeo = true; };
+      add(rgeo(0.34, 3.3, 0.08, 0.03), accMat.steel, 0, -0.25, 0);
+      add(own(new THREE.ConeGeometry(0.24, 0.45, 4)), accMat.steel, 0, -2.12, 0, Math.PI);
+      add(rgeo(1.0, 0.16, 0.22, 0.05), accMat.gold, 0, 1.45, 0);
+      add(rgeo(0.18, 0.75, 0.18, 0.05), accMat.grip, 0, 1.9, 0);
+      add(rgeo(0.26, 0.2, 0.26, 0.06), accMat.gold, 0, 2.35, 0);
+    } else if (id === 'shotgun') {
+      const s = new THREE.Group();
+      s.position.set(0, tH * 0.48, bz - 0.22); s.rotation.z = -0.6;  // diagonal across the back
+      g.add(s);
+      const add = (geo, mat, x, y, z) => accPart(s, geo, mat, x, y, z);
+      add(rgeo(0.16, 3.0, 0.16, 0.05), accMat.gunMetal, 0, 0.95, 0);       // barrel
+      add(rgeo(0.14, 2.3, 0.14, 0.05), accMat.gunMetal, 0.2, 0.7, 0);       // magazine tube
+      add(rgeo(0.38, 0.8, 0.26, 0.08), accMat.wood, 0.13, 0.9, 0);          // pump
+      add(rgeo(0.42, 0.95, 0.3, 0.08), accMat.gunMetal, 0.07, -0.55, 0);    // receiver
+      add(rgeo(0.4, 1.4, 0.26, 0.1), accMat.wood, 0.12, -1.65, 0);          // stock
+      add(rgeo(0.06, 2.6, 0.04, 0.02), accMat.black, -0.2, -0.1, 0.05);     // sling
+    }
+  } else if (slot === 'shirt') {
+    // a print on the front of the shirt
+    let mat = null;
+    if (id === 'pump') {
+      if (!pumpShirtMat) {
+        pumpShirtMat = canvasMat(512, (c) => {
+          c.translate(256, 256); c.rotate(-0.42); c.scale(6.8, 6.8); c.translate(-32, -13);
+          drawShotgun(c, '#ffd23f', '#ffd23f', 1.8);
+        }, { transparent: true, roughness: 0.6, polygonOffset: true, polygonOffsetFactor: -2 });
+      }
+      mat = pumpShirtMat;
+    } else if (id.startsWith('file:')) {
+      const file = id.slice(5);
+      mat = shirtTexCache.get(file);
+      if (!mat) {
+        mat = new THREE.MeshStandardMaterial({ transparent: true, roughness: 0.6, polygonOffset: true, polygonOffsetFactor: -2, visible: false });
+        shirtTexCache.set(file, mat);
+        texLoader.load(API + '/shirts/' + encodeURIComponent(file), (tex) => {
+          tex.colorSpace = THREE.SRGBColorSpace;
+          tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+          mat.map = tex; mat.visible = true; mat.needsUpdate = true;
+          mat.userData.aspect = tex.image.width / tex.image.height;
+          if (av.look.acc.shirt === id) { const prev = AV; AV = av; buildAccessory('shirt', id); AV = prev; }   // refit to the image
+        });
+      }
+    }
+    if (!mat) return;
+    const maxW = D.torsoW * 0.86, maxH = tH * 0.82, a = mat.userData.aspect || 1;
+    const w = a >= maxW / maxH ? maxW : maxH * a, h = a >= maxW / maxH ? maxW / a : maxH;   // fit, keep proportions
+    const decal = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
+    decal.userData.ownGeo = true;
+    decal.position.set(0, tH * 0.52, tD / 2 + 0.008);
+    g.add(decal);
+  } else if (slot === 'front') {
+    if (id === 'glock') {
+      // tucked in the front of the pants: grip sticking up out of the waistband
+      const p = new THREE.Group();
+      p.position.set(-0.45, D.lt * 0.5, tD / 2 + 0.07); p.rotation.x = 0.18;
+      g.add(p);
+      accPart(p, rgeo(0.26, 0.64, 0.38, 0.06), accMat.pistol, 0, 0.3, -0.02);        // grip
+      accPart(p, rgeo(0.28, 0.34, 0.6, 0.05), accMat.pistol, 0, -0.04, 0.12);        // back of the slide
+      accPart(p, rgeo(0.08, 0.22, 0.2, 0.03), accMat.pistol, 0, -0.06, 0.32);        // trigger guard
+      accPart(p, rgeo(0.27, 0.08, 0.06, 0.02), accMat.gunMetal, 0, 0.12, -0.2);      // back strap
+    }
+  }
+}
+function applyAccessories() {
+  const look = AV.look;
+  for (const s of ACC_SLOTS) buildAccessory(s, look.acc[s]);
+  // hats and masks: the helmet and ski mask hide all hair, the cap hides the hair on top (dreads still hang)
+  const hideAll = look.acc.head === 'helmet' || look.acc.face === 'skimask';
+  const hideTop = hideAll || look.acc.head === 'cap';
+  for (const c of AV.hairRoot.children) c.visible = !(hideAll || (hideTop && !AV.hairLocks.includes(c)));
+}
+// make a look safe to use (fills gaps, drops unknown values) — also used for other players' looks
+function sanitizeLook(lk) {
+  const out = { ...LOOK_DEFAULT, ...(lk && typeof lk === 'object' ? lk : {}) };
+  for (const k of ['skin', 'shirt', 'pants', 'shoes']) if (!/^#[0-9a-fA-F]{6}$/.test(String(out[k]))) out[k] = LOOK_DEFAULT[k];
+  if (!HAIR_STYLES.some(([id]) => id === out.hair)) out.hair = 'buzz';
+  const acc = { head: 'none', face: 'none', back: 'none', shirt: 'none', front: 'none', ...(out.acc && typeof out.acc === 'object' ? out.acc : {}) };
+  for (const s of ACC_SLOTS) {
+    const v = acc[s];
+    if (typeof v !== 'string' || (!(s === 'shirt' && /^file:[^/\\]+$/.test(v)) && !ACCESSORIES[s].some(([id]) => id === v))) acc[s] = 'none';
+  }
+  out.acc = acc;
+  return out;
+}
+function applyLookTo(av, lk) {
+  const prev = AV;
+  AV = av; av.look = lk;
+  av.mats.skin.color.set(lk.skin);
+  av.mats.shirt.color.set(lk.acc.shirt === 'pump' ? '#141416' : lk.shirt);   // the pump shirt is black
+  av.mats.pants.color.set(lk.pants);
+  av.mats.belt.color.set(lk.pants).multiplyScalar(0.62);
+  av.mats.shoes.color.set(lk.shoes);
+  buildHair(lk.hair);
+  applyAccessories();
+  AV = prev;
+}
+function applyLook() { applyLookTo(playerAv, look); }
 applyLook();
+
+/* ---------- Name tag above the player ---------- */
+const tagCanvas = document.createElement('canvas');
+tagCanvas.width = 512; tagCanvas.height = 128;
+const tagTex = new THREE.CanvasTexture(tagCanvas);
+tagTex.colorSpace = THREE.SRGBColorSpace;
+const nameTag = new THREE.Sprite(new THREE.SpriteMaterial({ map: tagTex, depthTest: false, transparent: true }));
+nameTag.scale.set(6.4, 1.6, 1);
+nameTag.renderOrder = 20;
+scene.add(nameTag);
+let tagText = 'Anonymous';
+function drawTag(text) {
+  tagText = text;
+  const g = tagCanvas.getContext('2d');
+  g.clearRect(0, 0, 512, 128);
+  let size = 64;
+  g.font = `800 ${size}px Nunito, system-ui, sans-serif`;
+  const w = g.measureText(text).width;
+  if (w > 480) { size = Math.floor(size * 480 / w); g.font = `800 ${size}px Nunito, system-ui, sans-serif`; }
+  g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+  g.lineWidth = 10; g.strokeStyle = 'rgba(0,0,0,.55)';
+  g.strokeText(text, 256, 66);
+  g.fillStyle = '#ffffff';
+  g.fillText(text, 256, 66);
+  tagTex.needsUpdate = true;
+}
+drawTag(tagText);
+document.fonts?.ready.then(() => drawTag(tagText));   // redraw once the Nunito font has loaded
+const _tagV = new V3();
+function updateNameTag() {
+  playerRig.parts.Head.getWorldPosition(_tagV);
+  nameTag.position.set(_tagV.x, _tagV.y + 1.9, _tagV.z);
+}
 
 /* =========================================================
    Input
@@ -1280,6 +1840,7 @@ let started = false;
 let selectedSlot = 0;
 
 addEventListener('keydown', (e) => {
+  if (e.target instanceof HTMLElement && e.target.matches('input, textarea')) return;   // typing a username isn't gameplay
   if (['Space', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.code)) e.preventDefault();
   if (e.code === 'Space' && !keys.Space) jumpQueued = true;
   if (e.code === 'KeyF' && !keys.KeyF) tryAttack(null);
@@ -1847,6 +2408,27 @@ function updateBust(dt) {
 }
 const XARMS = { lSh: [-1.45, 0, -0.6], lEl: [-1.75, 0, 0], rSh: [-1.45, 0, 0.6], rEl: [-1.75, 0, 0] };
 
+/* ---------- Crouch (hold C) + knee slide (C while running) ---------- */
+const SLIDE_MAX = 1.5;
+const slide = { active: false, t: 0, dir: new V3(0, 0, 1), v0: 0, cWas: false, lock: false, air: 0, dustT: 0 };
+function startSlide() {
+  const sp = Math.hypot(player.vel.x, player.vel.z) || RUN;
+  Object.assign(slide, { active: true, t: 0, air: 0, dustT: 0, v0: Math.max(sp, RUN) * 1.15 });
+  slide.dir.set(player.vel.x / sp, 0, player.vel.z / sp);
+  spawnDust(player.pos, 4, 3);
+}
+function endSlide() {
+  slide.active = false;
+  slide.lock = true;            // stand up; holding C won't crouch again until it's released
+}
+// on both knees, shins flat behind, leaning back with arms out
+const KNEESLIDE = zeroPose();
+{
+  setJ(KNEESLIDE, 'waist', -0.32); setJ(KNEESLIDE, 'neck', 0.18);
+  sym(KNEESLIDE, 'Hip', -0.12, 0, 0.12); sym(KNEESLIDE, 'Knee', 1.8); sym(KNEESLIDE, 'Ank', 0.9);
+  sym(KNEESLIDE, 'Sh', -0.45, 0, 1.2); sym(KNEESLIDE, 'El', -0.55);
+}
+
 /* ---------- Attacks (click / F) ---------- */
 const atk = { t: -1, type: 'punch', dur: 0.4, hit: 0.14, hand: 'l', tgt: null, applied: false };
 const raycaster = new THREE.Raycaster();
@@ -1909,8 +2491,18 @@ function updateAttack(dt) {
       const wp = tg.part.localToWorld(tg.local.clone());
       if (Math.hypot(wp.x - player.pos.x, wp.z - player.pos.z) < 8.5) {
         const dir = new V3(tg.npc.pos.x - player.pos.x, 0, tg.npc.pos.z - player.pos.z).normalize();
-        tg.npc.hit(tg.zone, tg.part, wp, dir, atk.type === 'kick' ? 1.2 : 1, PUNCH_DAMAGE);
+        const power = atk.type === 'kick' ? 1.2 : 1;
+        const ko = tg.npc.hit(tg.zone, tg.part, wp, dir, power, PUNCH_DAMAGE);
         cam.shake = 0.35;
+        // online: tell everyone else about the hit (which NPC, which body part, where, how hard)
+        if (mp.active) {
+          const local = tg.local;
+          mp.outbox.push({ type: 'hit', data: {
+            n: npcs.indexOf(tg.npc), m: tg.npc.rig.meshes.indexOf(tg.part), z: tg.zone,
+            l: [+local.x.toFixed(3), +local.y.toFixed(3), +local.z.toFixed(3)], d: [+dir.x.toFixed(3), +dir.z.toFixed(3)],
+            p: power, dmg: PUNCH_DAMAGE, ko,
+          } });
+        }
       }
     }
   }
@@ -1934,11 +2526,24 @@ function updatePlayer(dt) {
     hasInput = true;
   }
 
-  // stamina
+  // crouch (hold C) and knee slide (press C while running)
+  const cDown = started && !!keys.KeyC && !climb.active && !vault.active && !dive.active && !bust.active;
+  if (!cDown) slide.lock = false;
+  if (cDown && !slide.cWas && !slide.active && player.grounded && state.sprinting && state.speed > WALK + 2 && player.stamina > 5) startSlide();
+  slide.cWas = cDown;
+  if (slide.active) {
+    slide.t += dt;
+    slide.air = player.grounded ? 0 : slide.air + dt;
+    if (!cDown || slide.t >= SLIDE_MAX || player.stamina <= 0 || jumpQueued || slide.air > 0.2) endSlide();
+  }
+  const crouched = cDown && !slide.active && !slide.lock;   // after a slide you stand up until C is let go
+  player.crouched = crouched;
+
+  // stamina (crouching never drains it; a slide drains 1.25× as fast as sprinting)
   if (player.exhausted && player.stamina >= 30) player.exhausted = false;
-  const sprint = (hasInput && shiftDown() && !player.exhausted) || bust.active;
-  if (sprint) {
-    player.stamina -= 13 * dt; player.stamRest = 0.8;
+  const sprint = (hasInput && shiftDown() && !player.exhausted && !crouched && !slide.active) || bust.active;
+  if (sprint || slide.active) {
+    player.stamina -= 13 * (slide.active ? 1.25 : 1) * dt; player.stamRest = 0.8;
     if (player.stamina <= 0) { player.stamina = 0; player.exhausted = true; }
   } else {
     player.stamRest -= dt;
@@ -1955,10 +2560,21 @@ function updatePlayer(dt) {
   if (dive.active) { updateDive(dt); state.speed = RUN; jumpQueued = false; return; }
   if (bust.active) updateBust(dt);
 
-  const target = sprint ? RUN : WALK;
-  const accelRate = player.grounded ? (hasInput ? 9 : 13) : 2.5;
-  player.vel.x = damp(player.vel.x, move.x * target, accelRate, dt);
-  player.vel.z = damp(player.vel.z, move.z * target, accelRate, dt);
+  if (slide.active) {
+    // knee slide: carries your running speed, slows down, and can be steered a little
+    if (hasInput) {
+      const cur = Math.atan2(slide.dir.x, slide.dir.z);
+      const a = cur + clamp(wrapAngle(Math.atan2(move.x, move.z) - cur), -1.6 * dt, 1.6 * dt);
+      slide.dir.set(Math.sin(a), 0, Math.cos(a));
+    }
+    const sp = slide.v0 * Math.exp(-0.9 * slide.t);
+    player.vel.x = slide.dir.x * sp; player.vel.z = slide.dir.z * sp;
+  } else {
+    const target = sprint ? RUN : crouched ? WALK / 2 : WALK;     // crouched = half speed, no running
+    const accelRate = player.grounded ? (hasInput ? 9 : 13) : 2.5;
+    player.vel.x = damp(player.vel.x, move.x * target, accelRate, dt);
+    player.vel.z = damp(player.vel.z, move.z * target, accelRate, dt);
+  }
 
   if (jumpQueued && player.grounded && started) {
     player.vel.y = JUMP_V; player.grounded = false;
@@ -1999,6 +2615,8 @@ function updatePlayer(dt) {
   if (atk.t >= 0 && atk.tgt) {
     const ty = Math.atan2(atk.tgt.npc.pos.x - player.pos.x, atk.tgt.npc.pos.z - player.pos.z);
     player.yaw += wrapAngle(ty - player.yaw) * (1 - Math.exp(-25 * dt));
+  } else if (slide.active) {
+    player.yaw += wrapAngle(Math.atan2(slide.dir.x, slide.dir.z) - player.yaw) * (1 - Math.exp(-14 * dt));
   } else if (hasInput) {
     player.yaw += wrapAngle(Math.atan2(move.x, move.z) - player.yaw) * (1 - Math.exp(-14 * dt));
   }
@@ -2113,6 +2731,19 @@ function animatePlayer(dt, time) {
       mixJ(tg.rSh, [0.4, 0, -0.6], aw);
     }
   }
+  // crouch: knees bent, hips back, leaning forward, arms ready (the walk cycle keeps going on top)
+  player.crouchW = damp(player.crouchW || 0, player.crouched ? 1 : 0, 10, dt);
+  if (player.crouchW > 0.001) {
+    const w = player.crouchW;
+    for (const s of ['l', 'r']) {
+      tg[s + 'Hip'][0] -= 0.85 * w; tg[s + 'Knee'][0] += 1.3 * w; tg[s + 'Ank'][0] -= 0.45 * w;
+      tg[s + 'Sh'][0] -= 0.3 * w; tg[s + 'El'][0] -= 0.5 * w;
+    }
+    tg.hips[0] += 0.3 * w; tg.waist[0] += 0.12 * w; tg.neck[0] -= 0.32 * w;
+  }
+  // knee slide
+  player.slideW = damp(player.slideW || 0, slide.active ? 1 : 0, 14, dt);
+  if (player.slideW > 0.001) mixPose(tg, KNEESLIDE, player.slideW);
   // door charge: forearms crossed in an X in front of the face, chin tucked, shoulder down
   if (bust.active) {
     const w = smooth(clamp(bust.t / 0.1, 0, 1)) * (1 - smooth(seg(bust.t, 0.6, 0.8)));
@@ -2130,8 +2761,14 @@ function animatePlayer(dt, time) {
   rig.body.rotation.set(player.lean, 0, player.roll);
   rig.body.position.set(0, 0, 0);
   const [minY, mk] = lowestContact(rig);
-  rig.body.position.y = player.pos.y - minY + an.cur.bob * (player.grounded ? 1 : 0);
+  rig.body.position.y = player.pos.y - minY + an.cur.bob * (player.grounded ? 1 : 0) * (1 - (player.slideW || 0));
   rig.root.updateMatrixWorld(true);
+
+  // dust kicked up from the knees while sliding
+  if (slide.active && mk) {
+    slide.dustT -= dt;
+    if (slide.dustT <= 0) { slide.dustT = 0.06; _v2.setFromMatrixPosition(mk.matrixWorld); _v2.y = player.pos.y; spawnDust(_v2, 1, 1.4); }
+  }
 
   if (aw > 0.01 && atk.type === 'punch' && atk.tgt) {
     _atkT.copy(atk.tgt.local);
@@ -2560,7 +3197,9 @@ class NPC {
   }
 
   /* ----- hit reactions ----- */
-  hit(zone, part, wp, dir, power = 1, dmg = PUNCH_DAMAGE) {
+  // returns true if this hit knocked the NPC out. `remoteKO` (online): another player's hit — knock
+  // out exactly when it did on their screen so everyone sees the same thing.
+  hit(zone, part, wp, dir, power = 1, dmg = PUNCH_DAMAGE, remoteKO = null) {
     // damage + stacked damage number; 5 stacked hits (or 0 hp) = knockout
     this.hp = Math.max(0, this.hp - dmg);
     this.regenT = 8;
@@ -2572,9 +3211,10 @@ class NPC {
     if (this.ko) {                       // already out cold: shove the limp body
       if (this.ko.rd) this.ko.rd.impulse(part, dir, power);
       else { this.spr.sp[1] -= 3 * power; this.spr.np[1] -= 5 * power; }
-      return;
+      return false;
     }
-    if (this.fall === 'up' && (stack >= KO_HITS || this.hp <= 0)) { this.knockOut(dir, part); return; }
+    const knockout = remoteKO === null ? (stack >= KO_HITS || this.hp <= 0) : remoteKO;
+    if (this.fall === 'up' && knockout) { this.knockOut(dir, part); return true; }
 
     const D = this.rig.D;
     const local = part.worldToLocal(wp.clone());
@@ -2848,6 +3488,41 @@ class NPC {
 
     const hurt = this.painT > 0 || this.fall !== 'up' || this.legs.l || this.legs.r || this.chestT > 0;
     const want = this.ko && this.ko.phase !== 'getup' ? this.faceKO : hurt ? this.facePain : (this.state === 'watch' && this.react !== 'none') ? this.faceShock : this.faceN;
+    if (this.rig.faceMat.map !== want) this.rig.faceMat.map = want;
+  }
+
+  // Online, for everyone except the host: no AI of our own — follow the host's snapshot of this
+  // NPC (where it is, how fast it's going, its injuries, whether it's down) and animate from that.
+  // Hits from any player still play locally (damage numbers, flinches, holding the wound, ragdolls).
+  netSnapshot() {
+    const legs = (this.legs.l ? 1 : 0) | (this.legs.r ? 2 : 0);
+    const fall = { up: 0, falling: 1, down: 2, rising: 3 }[this.fall] ?? 0;
+    return [+this.pos.x.toFixed(2), +this.pos.y.toFixed(2), +this.pos.z.toFixed(2), +this.yaw.toFixed(3),
+      +this.moveSpeed.toFixed(2), legs, this.chestT > 0 ? 1 : 0, fall, +this.fallT.toFixed(3),
+      this.state === 'watch' ? 1 : 0];
+  }
+  puppetUpdate(dt) {
+    const p = this.pos;
+    this.painT -= dt; this.holdT -= dt; this.chestT -= dt; this.armHangT -= dt;
+    this.regenT -= dt;
+    if (this.ko) this.updateKO(dt);
+    const s = this.net;
+    if (s && !(this.ko && this.ko.rd)) {
+      const k = 1 - Math.exp(-10 * dt);
+      if (Math.hypot(s[0] - p.x, s[2] - p.z) > 25) { p.x = s[0]; p.z = s[2]; }   // too far off: snap
+      p.x += (s[0] - p.x) * k; p.y += (s[1] - p.y) * k; p.z += (s[2] - p.z) * k;
+      this.yaw += wrapAngle(s[3] - this.yaw) * k;
+      this.moveSpeed = s[4];
+      this.legs.l = !!(s[5] & 1); this.legs.r = !!(s[5] & 2);
+      if (s[6]) this.chestT = Math.max(this.chestT, 0.4);
+      if (!this.ko) { this.fall = ['up', 'falling', 'down', 'rising'][s[7]] || 'up'; this.fallT = s[8]; }
+      if (s[9] && this.state !== 'watch') this.state = 'watch';
+      else if (!s[9] && this.state === 'watch') this.state = 'wander';
+    }
+    this.vel.set(0, 0, 0); this.push.set(0, 0, 0);
+    for (const k in this.spr) { const sp = this.spr[k]; sp[1] += (-150 * sp[0] - 11 * sp[1]) * dt; sp[0] += sp[1] * dt; }
+    const hurt = this.painT > 0 || this.fall !== 'up' || this.legs.l || this.legs.r || this.chestT > 0;
+    const want = this.ko && this.ko.phase !== 'getup' ? this.faceKO : hurt ? this.facePain : this.faceN;
     if (this.rig.faceMat.map !== want) this.rig.faceMat.map = want;
   }
 
@@ -3668,8 +4343,18 @@ function onVaulted(box) {
   toast('NICE VAULT!'); setHint('Done!', 'good');
   tut.pause = 1.2;
 }
+// remember that the tutorial has been finished (cookie + browser storage, like the sign-in)
+function tutorialFinishedBefore() {
+  try { if (/(?:^|; )pump200_tutorial=1(?:;|$)/.test(document.cookie)) return true; } catch (e) { /* no cookies */ }
+  try { return localStorage.getItem('pump200.tutorial') === '1'; } catch (e) { return false; }
+}
+function saveTutorialFinished() {
+  try { document.cookie = 'pump200_tutorial=1; max-age=31536000; path=/; samesite=lax'; } catch (e) { /* no cookies */ }
+  try { localStorage.setItem('pump200.tutorial', '1'); } catch (e) { /* no storage */ }
+}
 function finishTutorial() {
   tut.done = true;
+  saveTutorialFinished();
   ui.step.textContent = 'COMPLETE'; ui.step.className = 'chip done';
   ui.title.textContent = 'Tutorial complete!';
   ui.desc.innerHTML = 'Heading to the city…';
@@ -3762,7 +4447,7 @@ function setWorld(name) {
   else { scene.fog.near = 170; scene.fog.far = 560; }
 }
 function placePlayer(x, z, yaw) {
-  climb.active = false; vault.active = false; dive.active = false; bust.active = false; atk.t = -1;
+  climb.active = false; vault.active = false; dive.active = false; bust.active = false; slide.active = false; atk.t = -1;
   player.pos.set(x, 0, z); player.vel.set(0, 0, 0); player.grounded = true; player.yaw = yaw;
   player.hp = 100; player.stamina = 100; player.exhausted = false;
   cam.yaw = yaw + Math.PI; cam.pitch = 0.3; cam.target.set(x, 5.6, z);
@@ -3805,21 +4490,23 @@ document.getElementById('leaveNo').addEventListener('click', closeLeave);
 document.getElementById('leaveYes').addEventListener('click', () => {
   ui.leave.classList.add('gone');
   ui.leaveBtn.classList.add('gone');
+  if (mp.code) mpLeave();          // online: leave the lobby too
   mode = 'loading';
   showLoading(enterMenu);
 });
 addEventListener('keydown', (e) => { if (e.code === 'Escape' && !ui.leave.classList.contains('gone')) closeLeave(); });
-function loadMap(id) {
+function loadMap(id, after, spawnOffset = 0) {
   ui.modal.classList.add('gone');
   mode = 'loading';
   showLoading(() => {
     ui.menu.classList.add('gone');
     setWorld(id);
-    if (id === 'city') placePlayer(0, 30, Math.PI); else placePlayer(0, 0, Math.PI);
+    if (id === 'city') placePlayer(spawnOffset, 30, Math.PI); else placePlayer(spawnOffset, 0, Math.PI);
     camMode = 'follow';
     ui.hud.classList.remove('gone');
     ui.leaveBtn.classList.remove('gone');
     mode = 'playing'; started = true;
+    if (after) after();
   });
 }
 function startGame(skip) {
@@ -3853,7 +4540,8 @@ function refreshCustomizeUI() {
     custom.classList.toggle('sel', !isPreset);
     custom.querySelector('input').value = look[key];
   }
-  for (const b of ui.customize.querySelectorAll('.hair')) b.classList.toggle('sel', b.dataset.h === look.hair);
+  document.getElementById('hairSelect').value = look.hair;
+  for (const sel of ui.customize.querySelectorAll('select[data-slot]')) sel.value = look.acc[sel.dataset.slot];
 }
 function setLook(key, value) {
   look[key] = value;
@@ -3877,23 +4565,526 @@ for (const box of ui.customize.querySelectorAll('.swatches')) {
   custom.appendChild(inp);
   box.appendChild(custom);
 }
-for (const [id, name] of HAIR_STYLES) {
-  const b = document.createElement('button');
-  b.className = 'hair'; b.dataset.h = id; b.textContent = name;
-  b.addEventListener('click', () => setLook('hair', id));
-  document.getElementById('hairList').appendChild(b);
+// hair + accessory dropdowns
+const fillSelect = (sel, items) => {
+  sel.replaceChildren(...items.map(([id, name]) => { const o = document.createElement('option'); o.value = id; o.textContent = name; return o; }));
+};
+const hairSelect = document.getElementById('hairSelect');
+fillSelect(hairSelect, HAIR_STYLES);
+hairSelect.addEventListener('change', () => setLook('hair', hairSelect.value));
+const accSelects = [...ui.customize.querySelectorAll('select[data-slot]')];
+for (const sel of accSelects) {
+  fillSelect(sel, ACCESSORIES[sel.dataset.slot]);
+  sel.addEventListener('change', () => { look.acc[sel.dataset.slot] = sel.value; applyLook(); saveLook(); });
 }
+// shirts from the shirts/ folder (listed by server.py); names come from the file names
+let shirtFiles = [];
+function refreshShirtOptions() {
+  const sel = document.getElementById('acc-shirt');
+  fillSelect(sel, [...ACCESSORIES.shirt, ...shirtFiles.map((f) => ['file:' + f, shirtDisplayName(f)])]);
+  // a saved shirt whose file has gone away falls back to none
+  if (look.acc.shirt.startsWith('file:') && !shirtFiles.includes(look.acc.shirt.slice(5))) { look.acc.shirt = 'none'; applyLook(); }
+  sel.value = look.acc.shirt;
+}
+fetch(API + '/api/shirts')
+  .then((r) => r.json())
+  .then((j) => { shirtFiles = Array.isArray(j.shirts) ? j.shirts : []; refreshShirtOptions(); })
+  .catch(() => { refreshShirtOptions(); });   // no server: just the built-in shirt
+refreshShirtOptions();
 refreshCustomizeUI();
 document.getElementById('menuCustomize').addEventListener('click', openCustomize);
 document.getElementById('custDone').addEventListener('click', closeCustomize);
 addEventListener('keydown', (e) => { if (e.code === 'Escape' && customizing) closeCustomize(); });
 
 document.getElementById('menuPlay').addEventListener('click', () => {
+  document.getElementById('onlineNote').classList.remove('show');
   ui.modeSelect.classList.remove('gone'); ui.mapSelect.classList.add('gone');
   ui.modal.classList.remove('gone');
 });
 document.getElementById('modalClose').addEventListener('click', () => ui.modal.classList.add('gone'));
-// ONLINE intentionally does nothing for now
+/* ---------- Accounts: username only, remembered with a cookie ---------- */
+const USER_RE = /^[A-Za-z0-9_]{3,16}$/;
+let username = null;
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+function readCookie(k) {
+  try { const m = document.cookie.match(new RegExp('(?:^|; )' + k + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; }
+  catch (e) { return null; }
+}
+function rememberUser(name) {
+  try { document.cookie = `pump200_user=${encodeURIComponent(name)}; max-age=31536000; path=/; samesite=lax`; } catch (e) { /* no cookies */ }
+  try { localStorage.setItem('pump200.user', name); } catch (e) { /* no storage (e.g. opened from disk) */ }
+}
+function storedUser() {
+  const c = readCookie('pump200_user');
+  if (c && USER_RE.test(c)) return c;
+  try { const l = localStorage.getItem('pump200.user'); if (l && USER_RE.test(l)) return l; } catch (e) { /* ignore */ }
+  return null;
+}
+Object.assign(ui, {
+  signup: document.getElementById('signup'), signupBtn: document.getElementById('menuSignup'),
+  suTitle: document.getElementById('suTitle'), suName: document.getElementById('suName'), suError: document.getElementById('suError'),
+  suRegister: document.getElementById('suRegister'), suUser: document.getElementById('suUser'), suPfp: document.getElementById('suPfp'),
+  stages: { form: document.getElementById('suForm'), wait: document.getElementById('suWait'), done: document.getElementById('suDone') },
+  btnOnline: document.getElementById('btnOnline'), onlineNote: document.getElementById('onlineNote'),
+});
+function setSignedIn(name) {
+  username = name;
+  drawTag(name);
+  ui.signupBtn.classList.add('gone');
+  ui.btnOnline.classList.add('ready');
+}
+// fade the visible stage out and the next one in (the SIGN-UP title only shows on the form)
+async function showStage(next) {
+  const cur = Object.values(ui.stages).find((s) => !s.classList.contains('gone'));
+  if (cur && cur !== ui.stages[next]) {
+    cur.classList.add('fading');
+    if (next !== 'form') ui.suTitle.classList.add('fading');
+    await wait(260);
+    cur.classList.add('gone'); cur.classList.remove('fading');
+  }
+  const el = ui.stages[next];
+  ui.suTitle.style.visibility = next === 'form' ? 'visible' : 'hidden';
+  if (next === 'form') ui.suTitle.classList.remove('fading');
+  el.classList.add('fading'); el.classList.remove('gone');
+  void el.offsetWidth;
+  el.classList.remove('fading');
+}
+function openSignup() {
+  ui.suName.value = ''; ui.suError.textContent = ''; ui.suRegister.disabled = false;
+  for (const s of Object.values(ui.stages)) s.classList.add('gone');
+  ui.stages.form.classList.remove('gone');
+  ui.suTitle.classList.remove('fading'); ui.suTitle.style.visibility = 'visible';
+  ui.signup.classList.remove('gone');
+  setTimeout(() => ui.suName.focus(), 50);
+}
+function closeSignup() { ui.signup.classList.add('gone'); }
+// a little profile picture: a close-up render of your own character's face
+function captureHeadshot() {
+  const src = renderer.domElement;
+  playerRig.parts.Head.getWorldPosition(_tagV);
+  const fx = Math.sin(player.yaw), fz = Math.cos(player.yaw);
+  const c = new THREE.PerspectiveCamera(22, src.width / src.height, 0.1, 500);
+  c.position.set(_tagV.x + fx * 7.5, _tagV.y + 0.5, _tagV.z + fz * 7.5);
+  c.lookAt(_tagV.x, _tagV.y + 0.2, _tagV.z);
+  sky.position.copy(c.position);
+  nameTag.visible = false;
+  renderer.render(scene, c);
+  nameTag.visible = true;
+  const s = Math.min(src.width, src.height);
+  const out = document.createElement('canvas');
+  out.width = out.height = 160;
+  out.getContext('2d').drawImage(src, (src.width - s) / 2, (src.height - s) / 2, s, s, 0, 0, 160, 160);
+  return out.toDataURL('image/png');
+}
+let registering = false;
+async function register() {
+  if (registering) return;
+  const name = ui.suName.value.trim();
+  if (!USER_RE.test(name)) { ui.suError.textContent = 'Use 3-16 letters, numbers or _'; return; }
+  registering = true;
+  ui.suError.textContent = ''; ui.suRegister.disabled = true;
+  await showStage('wait');
+  // always show "Making your account!" for at least a second
+  const [res] = await Promise.allSettled([
+    fetch(API + '/api/register', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: name }), credentials: API ? 'omit' : 'same-origin',
+    }).then(async (r) => ({ status: r.status, body: await r.json().catch(() => ({})) })),
+    wait(1000),
+  ]);
+  registering = false;
+  if (res.status === 'fulfilled' && res.value.status === 201) {
+    const final = res.value.body.username || name;
+    rememberUser(final);
+    ui.suUser.textContent = final;
+    ui.suPfp.src = captureHeadshot();
+    ui.signup.dataset.user = final;
+    await showStage('done');
+  } else {
+    ui.suError.textContent = res.status === 'rejected'
+      ? "Can't reach the server. Run python server.py and open http://localhost:8000"
+      : (res.value.body.error || 'Something went wrong. Try again.');
+    ui.suRegister.disabled = false;
+    await showStage('form');
+    ui.suName.focus();
+  }
+}
+ui.signupBtn.addEventListener('click', openSignup);
+document.getElementById('suClose').addEventListener('click', () => { if (!registering) closeSignup(); });
+ui.suRegister.addEventListener('click', register);
+ui.suName.addEventListener('keydown', (e) => { if (e.key === 'Enter') register(); });
+document.getElementById('suContinue').addEventListener('click', () => {
+  closeSignup();
+  setSignedIn(ui.signup.dataset.user);
+});
+// online: blue and ready once signed in; otherwise a reminder that fades after 3 s
+ui.btnOnline.addEventListener('click', () => {
+  if (username) { openMatch(); return; }
+  ui.onlineNote.classList.remove('show'); void ui.onlineNote.offsetWidth; ui.onlineNote.classList.add('show');
+});
+
+/* =========================================================
+   ONLINE: MATCH dashboard → lobby → shared match
+   ========================================================= */
+const mp = {
+  code: null, isHost: false, lobby: null,      // the lobby you're in
+  active: false,                               // playing the shared match right now
+  since: 0, outbox: [], syncT: 0, busy: false, fails: 0,
+  remotes: new Map(),                          // other players: name → { rig, av, tag, st, ... }
+  looksWanted: false, looksBusy: false,
+  poll: null,                                  // waiting-room refresh timer
+};
+const MAX_SYNC_FAILS = 25;
+Object.assign(ui, {
+  match: document.getElementById('match'), matchSetup: document.getElementById('matchSetup'), matchLobby: document.getElementById('matchLobby'),
+  maxPlayers: document.getElementById('maxPlayers'), maxVal: document.getElementById('maxVal'),
+  lobbyCode: document.getElementById('lobbyCode'), regenCode: document.getElementById('regenCode'),
+  matchMaps: document.getElementById('matchMaps'), createLobby: document.getElementById('createLobby'),
+  joinCode: document.getElementById('joinCode'), matchError: document.getElementById('matchError'),
+  playerList: document.getElementById('playerList'), lobbyCount: document.getElementById('lobbyCount'),
+  lobbyCodeShow: document.getElementById('lobbyCodeShow'), lobbyMap: document.getElementById('lobbyMap'),
+  hostMapRow: document.getElementById('hostMapRow'), guestMap: document.getElementById('guestMap'),
+  startMatch: document.getElementById('startMatch'), waitHost: document.getElementById('waitHost'),
+});
+const CROWN_SVG = '<svg class="pl-crown" viewBox="0 0 24 24" aria-label="Host"><path fill="#ffd23f" stroke="#7a5a00" stroke-width="1" stroke-linejoin="round" d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/><circle cx="12" cy="5" r="1.6" fill="#ffd23f"/><circle cx="3" cy="8" r="1.4" fill="#ffd23f"/><circle cx="21" cy="8" r="1.4" fill="#ffd23f"/></svg>';
+let matchMap = MAPS[0].id;
+let myPfp = '';
+const randomCode = () => Array.from({ length: 5 }, () => String.fromCharCode(65 + Math.floor(Math.random() * 26))).join('');
+async function api(path, body) {
+  const opts = body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {};
+  const r = await fetch(API + path, opts);
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok || !j.ok) throw new Error(j.error || `Server error (${r.status})`);
+  return j;
+}
+async function swapMatchStage(from, to) {
+  from.classList.add('fading'); await wait(300);
+  from.classList.add('gone'); from.classList.remove('fading');
+  to.classList.add('fading'); to.classList.remove('gone'); void to.offsetWidth; to.classList.remove('fading');
+}
+function mapName(id) { return (MAPS.find((m) => m.id === id) || MAPS[0]).name; }
+
+function openMatch() {
+  ui.modal.classList.add('gone');
+  myPfp = captureHeadshot();
+  document.getElementById('matchPfp').src = myPfp;
+  document.getElementById('matchName').textContent = username;
+  ui.matchError.textContent = '';
+  ui.matchSetup.classList.remove('gone', 'fading'); ui.matchLobby.classList.add('gone');
+  // map cards (same preview images as the offline list)
+  ui.matchMaps.replaceChildren(...MAPS.map((m) => {
+    const b = document.createElement('button');
+    b.className = 'm-map' + (m.id === matchMap ? ' sel' : '');
+    b.innerHTML = `<img alt="${m.name} map preview" src="${m.img}"><span>${m.name}</span>`;
+    b.addEventListener('click', () => { matchMap = m.id; for (const c of ui.matchMaps.children) c.classList.toggle('sel', c === b); });
+    return b;
+  }));
+  ui.match.classList.remove('gone');
+  regenerateCode();
+}
+ui.maxPlayers.addEventListener('input', () => { ui.maxVal.textContent = ui.maxPlayers.value; });
+// regenerate: a 1-second spinner, then a fresh unused code from the server
+let regenBusy = false;
+async function regenerateCode() {
+  if (regenBusy) return;
+  regenBusy = true;
+  ui.regenCode.disabled = true; ui.createLobby.disabled = true;
+  const label = ui.regenCode.innerHTML;
+  ui.regenCode.innerHTML = '<span class="spinner" aria-hidden="true"></span><span>Regenerating…</span>';
+  const [res] = await Promise.allSettled([api('/api/lobby/newcode'), wait(1000)]);
+  ui.lobbyCode.textContent = res.status === 'fulfilled' ? res.value.code : randomCode();
+  ui.regenCode.innerHTML = label;
+  ui.regenCode.disabled = false; ui.createLobby.disabled = false;
+  regenBusy = false;
+}
+ui.regenCode.addEventListener('click', () => { ui.matchError.textContent = ''; regenerateCode(); });
+document.getElementById('matchClose').addEventListener('click', () => { ui.match.classList.add('gone'); });
+
+async function createLobby() {
+  ui.matchError.textContent = '';
+  ui.createLobby.disabled = true;
+  try {
+    const j = await api('/api/lobby/create', {
+      username, code: ui.lobbyCode.textContent, max: +ui.maxPlayers.value, map: matchMap, look, pfp: myPfp,
+    });
+    await enterLobby(j.lobby);
+  } catch (e) {
+    ui.matchError.textContent = e.message === 'Failed to fetch' ? "Can't reach the server. Run python server.py" : e.message;
+    if (/in use/.test(e.message)) regenerateCode();
+  } finally { ui.createLobby.disabled = false; }
+}
+async function joinLobby() {
+  const code = ui.joinCode.value.trim().toUpperCase();
+  ui.matchError.textContent = '';
+  if (!/^[A-Z]{5}$/.test(code)) { ui.matchError.textContent = 'Lobby codes are 5 letters.'; return; }
+  try {
+    const j = await api('/api/lobby/join', { username, code, look, pfp: myPfp });
+    await enterLobby(j.lobby);
+  } catch (e) {
+    ui.matchError.textContent = e.message === 'Failed to fetch' ? "Can't reach the server. Run python server.py" : e.message;
+  }
+}
+ui.createLobby.addEventListener('click', createLobby);
+document.getElementById('joinLobby').addEventListener('click', joinLobby);
+ui.joinCode.addEventListener('keydown', (e) => { if (e.key === 'Enter') joinLobby(); });
+ui.joinCode.addEventListener('input', () => { ui.joinCode.value = ui.joinCode.value.toUpperCase().replace(/[^A-Z]/g, ''); });
+
+// ---- waiting room: player list (host has a crown), host picks the map and presses START ----
+async function enterLobby(lobby) {
+  mp.code = lobby.code;
+  mp.since = 0;
+  ui.lobbyCodeShow.textContent = lobby.code;
+  ui.lobbyMap.replaceChildren(...MAPS.map((m) => { const o = document.createElement('option'); o.value = m.id; o.textContent = m.name; return o; }));
+  renderLobby(lobby);
+  await swapMatchStage(ui.matchSetup, ui.matchLobby);
+  clearInterval(mp.poll);
+  mp.poll = setInterval(refreshLobby, 1000);
+}
+function renderLobby(lobby) {
+  mp.lobby = lobby;
+  mp.isHost = lobby.host === username;
+  ui.lobbyCount.textContent = `${lobby.players.length} / ${lobby.max}`;
+  // host first, then everyone else in the order they joined
+  const players = [...lobby.players].sort((a, b) => (b.host ? 1 : 0) - (a.host ? 1 : 0));
+  const sig = JSON.stringify(players.map((p) => [p.name, p.host]));
+  if (ui.playerList.dataset.sig !== sig) {
+    ui.playerList.dataset.sig = sig;
+    ui.playerList.replaceChildren(...players.map((p) => {
+      const row = document.createElement('div');
+      row.className = 'pl-row';
+      const img = document.createElement('img');
+      img.alt = ''; img.src = p.pfp || myPfp;
+      const name = document.createElement('span');
+      name.className = 'pl-name'; name.textContent = p.name;
+      row.append(img, name);
+      if (p.host) row.insertAdjacentHTML('beforeend', CROWN_SVG);
+      if (p.name === username) row.insertAdjacentHTML('beforeend', '<span class="pl-tag">You</span>');
+      return row;
+    }));
+  }
+  ui.hostMapRow.classList.toggle('gone', !mp.isHost);
+  ui.startMatch.classList.toggle('gone', !mp.isHost);
+  ui.waitHost.classList.toggle('gone', mp.isHost);
+  ui.guestMap.classList.toggle('gone', mp.isHost);
+  if (document.activeElement !== ui.lobbyMap) ui.lobbyMap.value = lobby.map;
+  ui.guestMap.innerHTML = `Map: <b>${mapName(lobby.map)}</b>`;
+  if (lobby.state === 'playing' && !mp.active) startOnlineMatch(lobby);
+}
+async function refreshLobby() {
+  if (!mp.code || mp.active) return;
+  try {
+    const j = await api('/api/lobby/info', { username, code: mp.code });   // POST: also keeps you in the lobby
+    if (!j.lobby.players.some((p) => p.name === username)) throw new Error("You're no longer in that lobby.");
+    renderLobby(j.lobby);
+  } catch (e) {
+    if (e.message === 'Failed to fetch') return;     // blip: try again next second
+    clearInterval(mp.poll); mp.code = null;
+    ui.matchError.textContent = e.message;
+    await swapMatchStage(ui.matchLobby, ui.matchSetup);
+  }
+}
+ui.lobbyMap.addEventListener('change', async () => {
+  try { renderLobby((await api('/api/lobby/map', { username, code: mp.code, map: ui.lobbyMap.value })).lobby); }
+  catch (e) { toast(e.message.toUpperCase().slice(0, 24)); }
+});
+ui.startMatch.addEventListener('click', async () => {
+  ui.startMatch.disabled = true;
+  try { const j = await api('/api/lobby/start', { username, code: mp.code }); await refreshLobby(); if (!mp.active) startOnlineMatch(j.lobby); }
+  catch (e) { ui.matchError.textContent = e.message; }
+  finally { ui.startMatch.disabled = false; }
+});
+document.getElementById('leaveLobby').addEventListener('click', async () => {
+  mpLeave();
+  ui.matchError.textContent = '';
+  await swapMatchStage(ui.matchLobby, ui.matchSetup);
+  regenerateCode();
+});
+
+// ---- the match itself ----
+function startOnlineMatch(lobby) {
+  clearInterval(mp.poll);
+  ui.match.classList.add('gone');
+  const idx = Math.max(0, lobby.players.findIndex((p) => p.name === username));
+  const offset = (idx - (lobby.players.length - 1) / 2) * 5;      // stand side by side, not on top of each other
+  mp.active = false;
+  loadMap(lobby.map, () => { mp.active = true; mp.syncT = 0; mp.fails = 0; mp.looksWanted = true; }, offset);
+}
+function mpLeave() {
+  const code = mp.code;
+  clearInterval(mp.poll);
+  if (code) api('/api/lobby/leave', { username, code }).catch(() => {});
+  mp.code = null; mp.active = false; mp.isHost = false; mp.lobby = null; mp.outbox.length = 0;
+  for (const name of [...mp.remotes.keys()]) removeRemote(name);
+  for (const n of npcs) n.net = null;
+}
+addEventListener('pagehide', () => {
+  if (mp.code && navigator.sendBeacon) {
+    navigator.sendBeacon(API + '/api/lobby/leave', new Blob([JSON.stringify({ username, code: mp.code })], { type: 'text/plain' }));
+  }
+});
+
+// what everyone else needs to draw you: where you are and every joint of your body this frame
+function myNetState() {
+  const r = playerRig, j = [];
+  for (const k of KEYS) { const e = r.J[k].rotation; j.push(+e.x.toFixed(3), +e.y.toFixed(3), +e.z.toFixed(3)); }
+  const p = r.root.position, b = r.body;
+  return {
+    w: world, p: [+p.x.toFixed(2), +p.y.toFixed(2), +p.z.toFixed(2)], y: +r.root.rotation.y.toFixed(3),
+    b: [+b.position.x.toFixed(3), +b.position.y.toFixed(3), +b.position.z.toFixed(3), +b.rotation.x.toFixed(3), +b.rotation.y.toFixed(3), +b.rotation.z.toFixed(3)],
+    j,
+  };
+}
+async function mpSync() {
+  mp.busy = true;
+  const events = mp.outbox.splice(0, 40);
+  const body = { username, code: mp.code, since: mp.since, state: myNetState(), events };
+  if (mp.isHost && world === 'city') body.npcs = npcs.map((n) => n.netSnapshot());
+  try {
+    const j = await api('/api/lobby/sync', body);
+    mp.fails = 0;
+    if (!mp.active) return;
+    mp.since = j.last;
+    mp.lobby = j.lobby;
+    mp.isHost = j.lobby.host === username;
+    for (const ev of j.events) {
+      if (ev.from === username) continue;
+      if (ev.type === 'hit') applyRemoteHit(ev.data);
+      else if (ev.type === 'leave') { removeRemote(ev.from); toast(`${ev.from} LEFT`.slice(0, 24)); }
+      else if (ev.type === 'join') toast(`${ev.from} JOINED`.slice(0, 24));
+    }
+    const names = new Set(j.lobby.players.map((p) => p.name));
+    for (const name of [...mp.remotes.keys()]) if (!names.has(name)) removeRemote(name);
+    for (const [name, st] of Object.entries(j.others || {})) {
+      let r = mp.remotes.get(name);
+      if (!r) { r = makeRemote(name); mp.looksWanted = true; }
+      r.st = st;
+    }
+    if (j.npcs && !mp.isHost) j.npcs.forEach((s, i) => { if (npcs[i]) npcs[i].net = s; });
+  } catch (e) {
+    events.forEach((ev) => mp.outbox.unshift(ev));            // keep hits for the next try
+    if (e.message !== 'Failed to fetch' || ++mp.fails > MAX_SYNC_FAILS) {
+      toast('LOST THE LOBBY');
+      mpLeave();
+      ui.leaveBtn.classList.add('gone'); ui.leave.classList.add('gone');
+      mode = 'loading';
+      showLoading(enterMenu);
+    }
+  } finally { mp.busy = false; }
+}
+// other players' looks (and profile pictures) come from the lobby info
+async function fetchLooks() {
+  mp.looksBusy = true; mp.looksWanted = false;
+  try {
+    const j = await api('/api/lobby/info?code=' + mp.code);
+    for (const p of j.lobby.players) {
+      const r = mp.remotes.get(p.name);
+      if (r && !r.dressed) { applyLookTo(r.av, sanitizeLook(p.look)); r.dressed = true; }
+    }
+  } catch (e) { mp.looksWanted = true; } finally { mp.looksBusy = false; }
+}
+function nameSprite(text) {
+  const c = document.createElement('canvas');
+  c.width = 512; c.height = 128;
+  const g = c.getContext('2d');
+  let size = 64;
+  g.font = `800 ${size}px Nunito, system-ui, sans-serif`;
+  const w = g.measureText(text).width;
+  if (w > 480) { size = Math.floor(size * 480 / w); g.font = `800 ${size}px Nunito, system-ui, sans-serif`; }
+  g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+  g.lineWidth = 10; g.strokeStyle = 'rgba(0,0,0,.55)'; g.strokeText(text, 256, 66);
+  g.fillStyle = '#ffffff'; g.fillText(text, 256, 66);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, depthTest: false, transparent: true }));
+  s.scale.set(6.4, 1.6, 1); s.renderOrder = 20;
+  return s;
+}
+function makeRemote(name) {
+  const rig = createRig({ face: 'smile' });
+  const av = makeAvatar(rig);
+  applyLookTo(av, sanitizeLook(null));          // plain look until theirs arrives
+  rig.root.visible = false;                      // shown once their first pose arrives
+  scene.add(rig.root);
+  const tag = nameSprite(name);
+  scene.add(tag);
+  const r = { name, rig, av, tag, st: null, shown: false, dressed: false };
+  mp.remotes.set(name, r);
+  return r;
+}
+function removeRemote(name) {
+  const r = mp.remotes.get(name);
+  if (!r) return;
+  scene.remove(r.rig.root, r.tag);
+  r.tag.material.map.dispose(); r.tag.material.dispose();
+  mp.remotes.delete(name);
+}
+// apply another player's punch/kick on an NPC here too (same NPC, same body part, same spot)
+const _rh = new V3();
+function applyRemoteHit(d) {
+  if (world !== 'city' || !d) return;
+  const n = npcs[d.n], part = n && n.rig.meshes[d.m];
+  if (!part || !Array.isArray(d.l) || !Array.isArray(d.d)) return;
+  _rh.set(+d.l[0] || 0, +d.l[1] || 0, +d.l[2] || 0);
+  part.localToWorld(_rh);
+  n.hit(String(d.z), part, _rh.clone(), new V3(+d.d[0] || 0, 0, +d.d[1] || 0), +d.p || 1, +d.dmg || PUNCH_DAMAGE, !!d.ko);
+}
+// every frame: sync ~12 times a second, and glide other players toward their latest pose
+// The network side runs on its own timer, not the animation loop: browsers pause the animation
+// loop in background tabs, and a paused player would otherwise stop syncing and get dropped.
+setInterval(() => {
+  if (!mp.active || !mp.code) return;
+  if (!mp.busy) mpSync();
+  if (mp.looksWanted && !mp.looksBusy) fetchLooks();
+}, 80);
+function mpFrame(dt) {
+  if (!mp.active || !mp.code) return;
+  const k = 1 - Math.exp(-14 * dt);
+  for (const r of mp.remotes.values()) {
+    const s = r.st;
+    const visible = !!s && s.w === world;
+    r.rig.root.visible = visible; r.tag.visible = visible;
+    if (!visible || !Array.isArray(s.p) || !Array.isArray(s.j)) continue;
+    const root = r.rig.root, body = r.rig.body;
+    if (!r.shown) {                                // first pose: jump straight there
+      root.position.set(s.p[0], s.p[1], s.p[2]); root.rotation.y = s.y;
+      r.shown = true;
+    }
+    root.position.x += (s.p[0] - root.position.x) * k;
+    root.position.y += (s.p[1] - root.position.y) * k;
+    root.position.z += (s.p[2] - root.position.z) * k;
+    root.rotation.y += wrapAngle(s.y - root.rotation.y) * k;
+    if (Array.isArray(s.b)) {
+      body.position.x += (s.b[0] - body.position.x) * k;
+      body.position.y += (s.b[1] - body.position.y) * k;
+      body.position.z += (s.b[2] - body.position.z) * k;
+      body.rotation.set(
+        body.rotation.x + wrapAngle(s.b[3] - body.rotation.x) * k,
+        body.rotation.y + wrapAngle(s.b[4] - body.rotation.y) * k,
+        body.rotation.z + wrapAngle(s.b[5] - body.rotation.z) * k);
+    }
+    KEYS.forEach((key, i) => {
+      const e = r.rig.J[key].rotation;
+      e.set(e.x + wrapAngle(s.j[i * 3] - e.x) * k, e.y + wrapAngle(s.j[i * 3 + 1] - e.y) * k, e.z + wrapAngle(s.j[i * 3 + 2] - e.z) * k);
+    });
+    r.rig.root.updateMatrixWorld(true);
+    r.rig.parts.Head.getWorldPosition(_rh);
+    r.tag.position.set(_rh.x, _rh.y + 1.9, _rh.z);
+  }
+}
+// drop the class once it has faded: otherwise re-showing the popup (display:none → visible)
+// restarts the animation and the note pops up without a click
+ui.onlineNote.addEventListener('animationend', () => ui.onlineNote.classList.remove('show'));
+// restore a saved sign-in (and drop it if the server no longer has that name)
+{
+  const saved = storedUser();
+  if (saved) {
+    setSignedIn(saved);
+    fetch(API + `/api/check?username=${encodeURIComponent(saved)}`)
+      .then((r) => r.json())
+      .then((j) => { if (j.ok && j.available) { username = null; drawTag('Anonymous'); ui.signupBtn.classList.remove('gone'); ui.btnOnline.classList.remove('ready'); } })
+      .catch(() => { /* offline: keep the saved name */ });
+  }
+}
 document.getElementById('btnOffline').addEventListener('click', () => {
   ui.modeSelect.classList.add('gone'); ui.mapSelect.classList.remove('gone');
 });
@@ -3907,6 +5098,7 @@ function buildMapList() {
   const shots = { baseplate: [[34, 20, 44], [0, 3.5, 0]], city: [[170, 130, 260], [0, 30, 0]] };
   animatePlayer(1 / 60, 0);
   for (const n of npcs) n.animate(1 / 60, 0);
+  nameTag.visible = false;
   sun.position.copy(player.pos).add(SUN_OFFSET);
   sun.target.position.copy(player.pos);
   sun.target.updateMatrixWorld();
@@ -3919,6 +5111,7 @@ function buildMapList() {
     m.img = renderer.domElement.toDataURL('image/jpeg', 0.85);
   }
   setWorld('baseplate');
+  nameTag.visible = true;
   for (const m of MAPS) {
     const card = document.createElement('div');
     card.className = 'map';
@@ -3957,6 +5150,8 @@ function updateHUD() {
   if (climb.active) { name = 'CLIMBING'; cls = 'climb'; }
   else if (vault.active) { name = 'VAULTING'; cls = 'climb'; }
   else if (!player.grounded && player.vel.y !== 0) { name = 'AIRBORNE'; cls = 'air'; }
+  else if (slide.active) { name = 'SLIDING'; cls = 'run'; }
+  else if (player.crouched) { name = 'CROUCHING'; cls = 'walk'; }
   else if (state.sprinting) { name = 'SPRINTING'; cls = 'run'; }
   else if (state.hasInput) { name = 'WALKING'; cls = 'walk'; }
   if (name !== lastStateName) { ui.stateName.textContent = name; ui.stateName.className = 'display ' + cls; lastStateName = name; }
@@ -3972,10 +5167,13 @@ function updateCamera(dt) {
     // play screen: slow drifting shot of your own character from the front, framed to the left
     // normal: character framed on the left (UI bottom-right); customizing: camera slides over so the
     // character stands on the right, next to the panel on the left
-    const wide = clamp((innerWidth / innerHeight - 0.7) * 3, 0, 3.2);
+    // (a tab that opens in the background can briefly be 0×0 — never let that turn into NaN)
+    const aspect = innerHeight > 0 && innerWidth > 0 ? innerWidth / innerHeight : 1.6;
+    const wide = clamp((aspect - 0.7) * 3, 0, 3.2);
     const narrow = innerWidth < 700;
-    cam.menuOff = damp(cam.menuOff ?? wide, customizing ? (narrow ? 0 : -Math.max(wide, 2.4)) : wide, 5, dt);
-    cam.menuD = damp(cam.menuD ?? 14, customizing ? 12.5 : 14, 5, dt);
+    const offTarget = customizing ? (narrow ? 0 : -Math.max(wide, 2.4)) : wide;
+    cam.menuOff = Number.isFinite(cam.menuOff) ? damp(cam.menuOff, offTarget, 5, dt) : offTarget;
+    cam.menuD = Number.isFinite(cam.menuD) ? damp(cam.menuD, customizing ? 12.5 : 14, 5, dt) : 14;
     const yaw = player.yaw + 0.5 + Math.sin(elapsed * 0.22) * 0.1, d = cam.menuD;
     const hy = player.pos.y + 4.2;
     camera.position.set(player.pos.x + Math.sin(yaw) * d, hy + 1.4 + Math.sin(elapsed * 0.3) * 0.2, player.pos.z + Math.cos(yaw) * d);
@@ -4033,10 +5231,23 @@ function updateCamera(dt) {
 /* =========================================================
    Main loop
    ========================================================= */
-buildCity();
-spawnNPCs();
+// Build the city and its NPCs from a fixed seed so every player in an online match gets exactly
+// the same buildings, cars, trees and people (same looks, same starting spots).
+function withSeed(seed, fn) {
+  const orig = Math.random;
+  let a = seed >>> 0;
+  Math.random = () => {          // mulberry32
+    a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  try { fn(); } finally { Math.random = orig; }
+}
+withSeed(200200, () => { buildCity(); spawnNPCs(); });
 
 addEventListener('resize', () => {
+  if (!innerWidth || !innerHeight) return;      // ignore 0×0 while a tab is hidden
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(innerWidth, innerHeight);
@@ -4052,9 +5263,12 @@ function frame() {
   updateAttack(dt);
   if (player.grounded && !wasGrounded && !climb.active) spawnDust(player.pos, 6, 3 * player.land + 1);
   wasGrounded = player.grounded;
-  if (world === 'city') for (const n of npcs) n.update(dt);
+  // online, only the host runs the NPC AI; everyone else follows the host's snapshot of them
+  if (world === 'city') for (const n of npcs) { if (mp.active && !mp.isHost) n.puppetUpdate(dt); else n.update(dt); }
   animatePlayer(dt, elapsed);
   updateHair(dt, elapsed);
+  updateNameTag();
+  mpFrame(dt);
   if (world === 'city') for (const n of npcs) n.animate(dt, elapsed);
   updateBlocks(dt, elapsed);
   updateBreakables(dt);
@@ -4068,8 +5282,16 @@ function frame() {
   requestAnimationFrame(frame);
 }
 buildMapList();
+// returning players who already finished the tutorial skip straight to the play screen
+if (tutorialFinishedBefore()) {
+  document.getElementById('start').classList.add('gone2');
+  ui.loading.style.transition = 'none';          // be black from the very first frame
+  mode = 'loading';
+  showLoading(enterMenu);
+  requestAnimationFrame(() => { ui.loading.style.transition = ''; });
+}
 frame();
-window.__game = { renderer, sun, scene, player, playerRig, npcs, setLook, openCustomize, vault, spawnVaultBlock, startVault, findLedge, dive, bust, breakables, spawnBreakWalls, climb, keys, cam, tut, blocks, startStep, enterMenu, loadMap, V3, get world() { return world; }, get mode() { return mode; } };
+window.__game = { renderer, sun, scene, player, playerRig, npcs, setLook, openCustomize, vault, spawnVaultBlock, startVault, findLedge, dive, bust, breakables, spawnBreakWalls, climb, keys, cam, tut, blocks, startStep, enterMenu, loadMap, finishTutorial, V3, look, applyLook, slide, mp, openMatch, shirtDisplayName, get world() { return world; }, get mode() { return mode; } };
 </script>
 </body>
 </html>
